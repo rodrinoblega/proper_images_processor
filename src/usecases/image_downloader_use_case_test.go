@@ -14,8 +14,6 @@ import (
 func TestImageDownloaderUseCase_ErrorInImageDownloaderClient(t *testing.T) {
 	//set up
 	imageFinderUseCase := NewImageDownloaderAndStorerUseCase(ImageDownloaderClientMockWithError{}, &frameworks.ImageStorerClientImpl{Directory: "asd/"})
-	wg := &SemaphoredWaitGroup{Sem: make(chan bool, 2)}
-	wg.Add(1)
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
 	defer func() {
@@ -23,7 +21,7 @@ func TestImageDownloaderUseCase_ErrorInImageDownloaderClient(t *testing.T) {
 	}()
 
 	//when
-	imageFinderUseCase.execute(domain.Image{Url: "https://asd.com"}, 1, wg)
+	imageFinderUseCase.execute(domain.Image{Url: "https://asd.com"}, 1)
 
 	//then
 	assert.Contains(t, buf.String(), "There was an error downloading an image. URL:")
@@ -32,8 +30,6 @@ func TestImageDownloaderUseCase_ErrorInImageDownloaderClient(t *testing.T) {
 func TestImageDownloaderUseCase_ErrorCreatingDirectory(t *testing.T) {
 	//set up
 	imageFinderUseCase := NewImageDownloaderAndStorerUseCase(ImageDownloaderClientMock{}, &frameworks.ImageStorerClientImpl{Directory: "asd/"})
-	wg := &SemaphoredWaitGroup{Sem: make(chan bool, 2)}
-	wg.Add(1)
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
 	defer func() {
@@ -41,7 +37,7 @@ func TestImageDownloaderUseCase_ErrorCreatingDirectory(t *testing.T) {
 	}()
 
 	//when
-	imageFinderUseCase.execute(domain.Image{Url: "https://asd.com"}, 1, wg)
+	imageFinderUseCase.execute(domain.Image{Url: "https://asd.com"}, 1)
 
 	//then
 	assert.Contains(t, buf.String(), "There was an error creating the directory: asd/image 2.jpg. Error: open asd/image 2.jpg: no such file or directory")
@@ -50,8 +46,6 @@ func TestImageDownloaderUseCase_ErrorCreatingDirectory(t *testing.T) {
 func TestImageDownloaderUseCase_ErrorReadingResponseBody(t *testing.T) {
 	//set up
 	imageFinderUseCase := NewImageDownloaderAndStorerUseCase(ImageDownloaderClientMock{}, &frameworks.ImageStorerClientImpl{Directory: "asd/"})
-	wg := &SemaphoredWaitGroup{Sem: make(chan bool, 2)}
-	wg.Add(1)
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
 	defer func() {
@@ -59,7 +53,7 @@ func TestImageDownloaderUseCase_ErrorReadingResponseBody(t *testing.T) {
 	}()
 
 	//when
-	imageFinderUseCase.execute(domain.Image{Url: "https://asd.com"}, 1, wg)
+	imageFinderUseCase.execute(domain.Image{Url: "https://asd.com"}, 1)
 
 	//then
 	assert.Contains(t, buf.String(), "There was an error reading bytes: invalid argument")

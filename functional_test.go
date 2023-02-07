@@ -18,11 +18,10 @@ func TestFunctionalImagesProcessor_ImagesFoundGreaterThanRequestedImages(t *test
 	os.RemoveAll(TestDirectory)
 	os.Mkdir(TestDirectory, 0755)
 	amountOfImages := 30
-	amountofThreads := 3
 
 	//when
 	service := adapters.NewImagesProcessorService(NewImagesProcessorUseCaseWithMockedClients("image_finder_mock.html"))
-	err := service.Execute(amountOfImages, amountofThreads)
+	err := service.Execute(amountOfImages)
 
 	//then
 	files, _ := os.ReadDir(TestDirectory)
@@ -40,11 +39,10 @@ func TestImageFinderUseCase_ImagesFoundLessThanRequestedImages(t *testing.T) {
 	os.RemoveAll(TestDirectory)
 	os.Mkdir(TestDirectory, 0755)
 	amountOfImages := 10
-	amountofThreads := 3
 
 	//when
 	service := adapters.NewImagesProcessorService(NewImagesProcessorUseCaseWithMockedClients("image_finder_mock_with_no_records.html"))
-	err := service.Execute(amountOfImages, amountofThreads)
+	err := service.Execute(amountOfImages)
 
 	//then
 	files, _ := os.ReadDir(TestDirectory)
@@ -57,32 +55,15 @@ func TestImageFinderUseCase_ImagesFoundLessThanRequestedImages(t *testing.T) {
 	assert.Equal(t, 0, count)
 }
 
-func TestFunctionalImagesProcessor_With10Threads(t *testing.T) {
-	//SET UP
-	os.RemoveAll(TestDirectory)
-	os.Mkdir(TestDirectory, 0755)
-	amountOfImages := 3
-	amountOfThreads := 10
-
-	//when
-	service := adapters.NewImagesProcessorService(NewImagesProcessorUseCaseWithMockedClients("image_finder_mock.html"))
-	err := service.Execute(amountOfImages, amountOfThreads)
-
-	//then
-	assert.NotNil(t, err)
-	assert.Equal(t, "amount of threads should be between 1 and 5", err.Error())
-}
-
 func TestFunctionalImagesProcessor_With500Images(t *testing.T) {
 	//SET UP
 	os.RemoveAll(TestDirectory)
 	os.Mkdir(TestDirectory, 0755)
 	amountOfImages := 500
-	amountOfThreads := 3
 
 	//when
 	service := adapters.NewImagesProcessorService(NewImagesProcessorUseCaseWithMockedClients("image_finder_mock.html"))
-	err := service.Execute(amountOfImages, amountOfThreads)
+	err := service.Execute(amountOfImages)
 
 	//then
 	assert.NotNil(t, err)

@@ -15,24 +15,20 @@ func NewImagesProcessorService(imageProcessorUseCase *usecases.ImageProcessorUse
 	}
 }
 
-func (imagesProcessorService *ImagesProcessorService) Execute(amountOfImagesRequested, amountOfThreads int) error {
-	err := validateInputParams(amountOfImagesRequested, amountOfThreads)
+func (imagesProcessorService *ImagesProcessorService) Execute(amountOfImagesRequested int) error {
+	err := validateInputParams(amountOfImagesRequested)
 
 	if err == nil {
-		err = imagesProcessorService.ImagesProcessor.Execute(amountOfImagesRequested, amountOfThreads)
+		err = imagesProcessorService.ImagesProcessor.Execute(amountOfImagesRequested)
 	}
 
 	return err
 
 }
 
-func validateInputParams(amountOfImages int, amountOfThreads int) error {
+func validateInputParams(amountOfImages int) error {
 	if amountOfImages > 100 {
 		return errors.New("amount of images should not be more than 100")
-	}
-
-	if amountOfThreads < 1 || amountOfThreads > 5 {
-		return errors.New("amount of threads should be between 1 and 5")
 	}
 
 	return nil

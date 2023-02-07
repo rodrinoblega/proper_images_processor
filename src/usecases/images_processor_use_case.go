@@ -17,7 +17,7 @@ func NewImageProcessorUseCase(imagesFinderUseCase *ImageFinderUseCase, imagesDow
 	}
 }
 
-func (imageProcessor *ImageProcessorUseCase) Execute(amountOfImagesRequested, amountOfThreads int) error {
+func (imageProcessor *ImageProcessorUseCase) Execute(amountOfImagesRequested int) error {
 	var imagesUrlAccumulated []domain.Image
 
 	instrumentation.LogMessage("Finding images...")
@@ -27,12 +27,9 @@ func (imageProcessor *ImageProcessorUseCase) Execute(amountOfImagesRequested, am
 	}
 
 	instrumentation.LogMessage("Downloading images...")
-	wg := &SemaphoredWaitGroup{Sem: make(chan bool, amountOfThreads)}
 	for index, image := range imageUrlFound {
-		wg.Add(1)
-		go imageProcessor.ImagesDownloaderUseCase.execute(image, index, wg)
+		imageProcessor.ImagesDownloaderUseCase.execute(image, index)
 	}
-	wg.Wait()
 
 	instrumentation.LogMessage("Done!")
 	return err

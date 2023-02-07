@@ -11,16 +11,14 @@ import (
 
 func main() {
 	amountOfImagesRequested := flag.Int("amount", 1, "an int")
-	amountOfThreads := flag.Int("threads", 1, "an int")
 	flag.Parse()
 	instrumentation.LogMessage("Amount of images to find: " + strconv.Itoa(*amountOfImagesRequested))
-	instrumentation.LogMessage("Amount of threads to use: " + strconv.Itoa(*amountOfThreads))
 
 	start := time.Now()
 
 	service := adapters.NewImagesProcessorService(configuration.CreateImagesProcessorService())
 
-	error := service.Execute(*amountOfImagesRequested, *amountOfThreads)
+	error := service.Execute(*amountOfImagesRequested)
 	if error != nil {
 		instrumentation.LogMessage("The application has the following error: " + error.Error())
 	}

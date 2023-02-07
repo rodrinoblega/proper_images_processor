@@ -10,7 +10,7 @@ func TestImagesProcessorUseCase_ErrorInImageFinderClient(t *testing.T) {
 	imageProcessorUseCase := NewImageProcessorUseCase(NewImageFinderUseCase(ImageFinderClientMock{}), nil)
 
 	//when
-	err := imageProcessorUseCase.Execute(10, 5)
+	err := imageProcessorUseCase.Execute(10)
 
 	//then
 	assert.NotNil(t, err)

@@ -26,7 +26,7 @@ func NewImageDownloaderAndStorerUseCase(imageDownloaderClient ImageDownloaderCli
 	}
 }
 
-func (imageDownloaderUseCase *ImageDownloaderAndStorerUseCase) execute(image domain.Image, index int, wg *SemaphoredWaitGroup) {
+func (imageDownloaderUseCase *ImageDownloaderAndStorerUseCase) execute(image domain.Image, index int) {
 	imageBytes, err := imageDownloaderUseCase.ImageDownloaderClient.Download(image.Url)
 	if err != nil {
 		instrumentation.LogMessage("There was an error downloading an image. URL: " + image.Url + ". Error: " + err.Error())
@@ -37,6 +37,4 @@ func (imageDownloaderUseCase *ImageDownloaderAndStorerUseCase) execute(image dom
 	if err == nil {
 		instrumentation.LogMessage("Success saving image " + strconv.Itoa(index+1))
 	}
-
-	wg.Done()
 }
