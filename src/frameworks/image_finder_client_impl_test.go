@@ -11,8 +11,10 @@ import (
 )
 
 func TestImageFinderClientImpl_WithErrorInApiCall(t *testing.T) {
+	//setup
 	imageFinderClientImpl := ImageFinderClientImpl{Url: "asd", Client: &ImageFinderClientMockWithErrorInApiCall{}}
 
+	//when
 	_, err := imageFinderClientImpl.Find(1)
 
 	//then
@@ -21,8 +23,10 @@ func TestImageFinderClientImpl_WithErrorInApiCall(t *testing.T) {
 }
 
 func TestImageFinderClientImpl_WithValidGoqueryDocumentResponse(t *testing.T) {
+	//setup
 	imageFinderClientImpl := ImageFinderClientImpl{Url: "asd", Client: &ImageFinderClientMockWithValidGoqueryDocumentInResponse{}}
 
+	//when
 	doc, _ := imageFinderClientImpl.Find(2)
 
 	//then

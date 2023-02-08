@@ -11,11 +11,10 @@ import (
 )
 
 func TestImageFinderUseCase_ErrorInFinderClient(t *testing.T) {
-
-	//SETUP
+	//setup
 	imageFinderUseCase := ImageFinderUseCase{ImageFinderClient: ImageFinderClientMock{}}
 
-	//WHEN
+	//when
 	_, err := imageFinderUseCase.execute([]domain.Image{{Position: 1, Url: "asd.com"}}, 1)
 
 	//then

@@ -10,8 +10,10 @@ import (
 )
 
 func TestImageDownloaderClientImpl_WithErrorInApiCall(t *testing.T) {
+	//setup
 	imageDownloaderClientImpl := ImageDownloaderClientImpl{Client: &ImageDownloaderClientMockWithErrorInApiCall{}}
 
+	//when
 	_, err := imageDownloaderClientImpl.Download("https://asd.com")
 
 	//then
@@ -20,8 +22,10 @@ func TestImageDownloaderClientImpl_WithErrorInApiCall(t *testing.T) {
 }
 
 func TestImageDownloaderClientImpl_WithoutErrors(t *testing.T) {
+	//setup
 	imageDownloaderClientImpl := ImageDownloaderClientImpl{Client: &ImageDownloaderClientMockWithoutErrors{}}
 
+	//when
 	_, err := imageDownloaderClientImpl.Download("https://asd.com")
 
 	//then

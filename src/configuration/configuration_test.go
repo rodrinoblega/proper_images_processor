@@ -14,7 +14,6 @@ func TestConfiguration_ProdConfiguration(t *testing.T) {
 
 	//then
 	assert.Equal(t, createImageProcessorUseCaseExpected(), conf)
-
 }
 
 func createImageProcessorUseCaseExpected() *usecases.ImageProcessorUseCase {

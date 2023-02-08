@@ -9,9 +9,7 @@ Owner: Rodrigo Noblega
 
 ## Objective
 
-Program to download the images from http://icanhas.cheezburger.com/ and stores them locally.
-
-Consideraciones
+Program to download images from http://icanhas.cheezburger.com/ and store them locally.
 
 
 ## Project structure
@@ -25,15 +23,16 @@ Project structure diagram:
 ![](static/Proper_Diagram.png)
 
 ```
-Note: I have the ImageFinderClient, ImageDownloadClient and ImageStorerClient as interface inside UseCase layer and the 
-implementations of those interface in the framework layer. I did this because, if in the future we want to change 
-any implementation, I would only modify it in one single place.
+Note: I have the ImageFinderClient, ImageDownloadClient and ImageStorerClient as interface
+inside UseCase layer and the implementations of those interface in the framework layer. I 
+did this because, if in the future we want to change any implementation, I would only have
+modify in one single place.
 ```
 
 ```
-Note 2: I have an Instrumentation class that handles logs. Nowadays I only print the error. 
+Note 2: I have an Instrumentation struct that handles logs. Nowadays I only print the error. 
 If we want to add, for example, a tracking tool in order to register errors, 
-we can do it here without modifying any code.
+we can do it here without modifying any business logic code.
 ```
 
 ```
@@ -45,6 +44,7 @@ inversion principle.
 
 - It is considered that it is not known how many images there are per page
 - It is considered that the images have to be saved in the same order that is shown on the page
+
 
 ## Using the client
 
